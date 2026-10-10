@@ -19,11 +19,13 @@ A mobile-first workout app (installable PWA) for a 4-day split. It shows today's
 | Day | Focus | Exercises |
 | --- | --- | --- |
 | 1 (Mon) | Chest, Back & Arms | Chest Press, Incline Press, Lat Pulldown, Seated Row, Bicep Curls, Tricep Pushdowns |
-| 2 (Tue) | Quads, Hamstrings & Calves | Barbell Squats, RDLs, Leg Press, Leg Extensions, Calf Press, Hamstring Curls |
+| 2 (Tue) | Quads, Hamstrings & Calves | Barbell Squats, RDLs, Goblet Squat, Leg Extensions, Dumbbell Calf Raise, Hamstring Curls |
 | 3 (Wed) | Rest | |
 | 4 (Thu) | Shoulders, Chest & Back | Shoulder Press, Lateral Raises, Chest Flies, Lat Pulldown, Rear Delt Flies, Overhead Tricep Extensions |
-| 5 (Fri) | Glutes, Hamstrings & Quads | Leg Extensions, Leg Press, Hamstring Curls, Walking Lunges, Calf Press, RDLs |
+| 5 (Fri) | Glutes, Hamstrings & Quads | Leg Extensions, Goblet Squat, Hamstring Curls, Walking Lunges, Dumbbell Calf Raise, RDLs |
 | 6–7 | Rest | |
+
+Leg Press and Calf Press were swapped for free-weight versions (Goblet Squat and Dumbbell Calf Raise). The machine versions are still in the exercise catalog, so you can switch back in `plan.ts`.
 
 Edit the plan in [src/data/plan.ts](src/data/plan.ts) and the names, machines and set/rep targets in [src/data/exercises.ts](src/data/exercises.ts).
 

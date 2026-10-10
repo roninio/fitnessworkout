@@ -29,6 +29,8 @@ const MAPPING = {
   'rear-delt-flies': 'Reverse_Machine_Flyes',
   'overhead-tricep-extensions': 'Cable_Rope_Overhead_Triceps_Extension',
   'walking-lunges': 'Bodyweight_Walking_Lunge',
+  'goblet-squat': 'Goblet_Squat',
+  'dumbbell-calf-raise': 'Standing_Dumbbell_Calf_Raise',
 }
 
 const res = await fetch(`${RAW}/dist/exercises.json`)

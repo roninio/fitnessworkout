@@ -45,6 +45,16 @@ const META: Record<ExerciseId, ExerciseMeta> = {
     reps: '10–12',
   },
   'walking-lunges': { name: 'Walking Lunges', machine: 'Bodyweight or dumbbells', reps: '10 / leg' },
+  'goblet-squat': {
+    name: 'Goblet Squat',
+    machine: 'Dumbbell or kettlebell at chest',
+    reps: '10–12',
+  },
+  'dumbbell-calf-raise': {
+    name: 'Dumbbell Calf Raise',
+    machine: 'Dumbbells + a step or weight plate',
+    reps: '12–15',
+  },
 }
 
 const BASE = import.meta.env.BASE_URL

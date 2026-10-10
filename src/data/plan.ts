@@ -20,7 +20,7 @@ export const PLAN: DayPlan[] = [
     day: 2,
     title: 'Quads, Hamstrings & Calves',
     rest: false,
-    exercises: ['barbell-squats', 'rdl', 'leg-press', 'leg-extensions', 'calf-press', 'hamstring-curls'],
+    exercises: ['barbell-squats', 'rdl', 'goblet-squat', 'leg-extensions', 'dumbbell-calf-raise', 'hamstring-curls'],
   },
   { day: 3, title: 'Rest Day', rest: true, exercises: [] },
   {
@@ -40,7 +40,7 @@ export const PLAN: DayPlan[] = [
     day: 5,
     title: 'Glutes, Hamstrings & Quads',
     rest: false,
-    exercises: ['leg-extensions', 'leg-press', 'hamstring-curls', 'walking-lunges', 'calf-press', 'rdl'],
+    exercises: ['leg-extensions', 'goblet-squat', 'hamstring-curls', 'walking-lunges', 'dumbbell-calf-raise', 'rdl'],
   },
   { day: 6, title: 'Rest Day', rest: true, exercises: [] },
   { day: 7, title: 'Rest Day', rest: true, exercises: [] },
