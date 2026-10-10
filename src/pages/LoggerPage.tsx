@@ -107,7 +107,7 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
           <h1 className="text-2xl font-extrabold leading-tight tracking-tight text-white">{ex.name}</h1>
         </div>
 
-        <ImageViewer key={ex.id} images={ex.images} alt={ex.name} />
+        <ImageViewer key={`img-${ex.id}`} images={ex.images} alt={ex.name} />
 
         <div className="flex flex-wrap gap-2 text-sm">
           <span className="flex items-center gap-1.5 rounded-full bg-zinc-900 px-3 py-1.5 text-zinc-200">
@@ -176,7 +176,7 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
           </div>
         </section>
 
-        <NoteField key={ex.id} value={data.notes[ex.id] ?? ''} onSave={(v) => setNote(ex.id, v)} />
+        <NoteField key={`note-${ex.id}`} value={data.notes[ex.id] ?? ''} onSave={(v) => setNote(ex.id, v)} />
 
         <details className="group rounded-2xl bg-zinc-900 p-4">
           <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-white">
