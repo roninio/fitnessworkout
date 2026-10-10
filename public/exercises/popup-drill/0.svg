@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="80 60 740 494">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#18181b"/></linearGradient></defs>
+<rect width="900" height="600" fill="url(#g)"/>
+<g transform="translate(0,-70)">
+<g fill="none" stroke="#38bdf8" stroke-linecap="round" opacity=".35" stroke-width="6">
+<path d="M0 535 Q 75 515 150 535 T 300 535 T 450 535 T 600 535 T 750 535 T 900 535"/>
+<path d="M0 575 Q 75 555 150 575 T 300 575 T 450 575 T 600 575 T 750 575 T 900 575" opacity=".6"/></g><path d="M140 492 C 150 470 300 462 450 462 C 620 462 735 472 775 492 C 735 512 620 520 450 520 C 300 520 150 514 140 492 Z" fill="#a3e635"/><path d="M190 492 H 720" stroke="#4d7c0f" stroke-width="4"/><g stroke="#e4e4e7" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"><polyline points="600,440 425,448 225,454"/><polyline points="588,440 560,384 548,462"/></g><circle cx="650" cy="422" r="32" fill="#e4e4e7"/><path d="M548 380 Q 600 300 620 230" fill="none" stroke="#a3e635" stroke-width="7" stroke-dasharray="4 14" stroke-linecap="round" opacity=".9"/>
+</g>
+</svg>

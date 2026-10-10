@@ -1,5 +1,5 @@
 import type { Exercise } from '../data/exercises'
-import { formatKg, topSet, type LastPerformance } from '../lib/store'
+import { formatLoad, topSet, type LastPerformance } from '../lib/store'
 import { Check, ChevronRight } from './Icons'
 
 interface Props {
@@ -37,7 +37,7 @@ export function ExerciseCard({ index, exercise, done, total, last, onOpen }: Pro
           </span>
           {top ? (
             <span className="truncate text-zinc-400">
-              Last: <span className="font-medium text-zinc-200">{formatKg(top.kg)} kg × {top.reps}</span>
+              Last: <span className="font-medium text-zinc-200">{formatLoad(top.kg)} × {top.reps}</span>
             </span>
           ) : (
             <span className="truncate text-zinc-500">No log yet</span>

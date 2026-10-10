@@ -72,6 +72,13 @@ export const Moon = (p: P) => (
     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z" />
   </svg>
 )
+export const Wave = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M2 12c2-2.5 4-2.5 6 0s4 2.5 6 0 4-2.5 6 0" />
+    <path d="M2 18c2-2.5 4-2.5 6 0s4 2.5 6 0 4-2.5 6 0" />
+    <path d="M6 7.5c1.5-3 5-4 8-2.5" />
+  </svg>
+)
 export const Timer = (p: P) => (
   <svg {...base(p)}>
     <circle cx="12" cy="13" r="8" />

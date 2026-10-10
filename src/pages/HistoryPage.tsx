@@ -9,6 +9,7 @@ import {
   deleteSession,
   doneSets,
   formatKg,
+  formatLoad,
   formatSets,
   progression,
   sessionHasData,
@@ -110,8 +111,12 @@ function ExerciseProgress({ data }: { data: AppData }) {
       {rows.map(({ id, ex, points }) => {
         const first = points[0]
         const latest = points[points.length - 1]
-        const best = Math.max(...points.map((p) => p.kg))
-        const delta = latest.kg - first.kg
+        // Bodyweight-only exercises are tracked by reps instead of kg.
+        const bw = points.every((p) => p.kg === 0)
+        const metric = (p: { kg: number; reps: number }) => (bw ? p.reps : p.kg)
+        const unit = bw ? 'reps' : 'kg'
+        const best = Math.max(...points.map(metric))
+        const delta = metric(latest) - metric(first)
         const isOpen = open === id
         return (
           <li key={id} className="overflow-hidden rounded-3xl bg-zinc-900">
@@ -126,19 +131,19 @@ function ExerciseProgress({ data }: { data: AppData }) {
                 <div className="truncate font-semibold text-white">{ex.name}</div>
                 <div className="text-sm text-zinc-400">
                   <span className="font-semibold tabular-nums text-white">
-                    {formatKg(latest.kg)} kg × {latest.reps}
+                    {formatLoad(latest.kg)} × {latest.reps}
                   </span>
                   {points.length > 1 && (
                     <span
                       className={`ml-2 font-semibold ${delta > 0 ? 'text-accent' : delta < 0 ? 'text-red-400' : 'text-zinc-500'}`}
                     >
                       {delta > 0 ? '+' : ''}
-                      {formatKg(delta)} kg
+                      {formatKg(delta)} {unit}
                     </span>
                   )}
                 </div>
               </div>
-              <Sparkline values={points.map((p) => p.kg)} width={72} />
+              <Sparkline values={points.map(metric)} width={72} />
               <ChevronDown className={`h-5 w-5 shrink-0 text-zinc-600 transition ${isOpen ? 'rotate-180' : ''}`} />
             </button>
             {isOpen && (
@@ -147,14 +152,16 @@ function ExerciseProgress({ data }: { data: AppData }) {
                   <span>
                     {points.length} workout{points.length === 1 ? '' : 's'}
                   </span>
-                  <span>Best {formatKg(best)} kg</span>
+                  <span>
+                    Best {formatKg(best)} {unit}
+                  </span>
                 </div>
                 <ul className="divide-y divide-white/5">
                   {[...points].reverse().map((p, i) => (
                     <li key={`${p.date}-${i}`} className="flex justify-between py-1.5">
                       <span className="text-zinc-400">{formatDate(p.date)}</span>
                       <span className="font-medium tabular-nums text-white">
-                        {formatKg(p.kg)} kg × {p.reps}
+                        {formatLoad(p.kg)} × {p.reps}
                       </span>
                     </li>
                   ))}

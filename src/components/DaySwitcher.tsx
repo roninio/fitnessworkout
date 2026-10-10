@@ -1,6 +1,6 @@
 import { PLAN, type DayNumber } from '../data/plan'
 import { WEEKDAY_SHORT } from '../lib/date'
-import { Moon } from './Icons'
+import { Moon, Wave } from './Icons'
 
 interface Props {
   selected: DayNumber
@@ -30,7 +30,13 @@ export function DaySwitcher({ selected, today, completed, onSelect }: Props) {
             <span className={`text-[10px] uppercase ${active ? 'text-zinc-900/70' : 'text-zinc-500'}`}>
               {isToday ? 'Today' : WEEKDAY_SHORT[p.day - 1]}
             </span>
-            {p.rest ? <Moon className="mt-0.5 h-4 w-4" /> : <span className="text-base leading-tight">D{p.day}</span>}
+            {p.rest ? (
+              <Moon className="mt-0.5 h-4 w-4" />
+            ) : p.surf ? (
+              <Wave className={`mt-0.5 h-5 w-5 ${active ? '' : 'text-sky-400'}`} />
+            ) : (
+              <span className="text-base leading-tight">D{p.day}</span>
+            )}
             {completed.has(p.day) && (
               <span className={`absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full ${active ? 'bg-zinc-950' : 'bg-accent'}`} />
             )}

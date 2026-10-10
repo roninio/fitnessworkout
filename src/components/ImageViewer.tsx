@@ -4,12 +4,11 @@ import { Expand, Pause, Play, X } from './Icons'
 interface Props {
   images: string[]
   alt: string
+  labels?: string[]
 }
 
-const LABELS = ['Start', 'Finish']
-
 /** Shows the exercise frames; auto-alternates start/finish so the movement reads like an animation. */
-export function ImageViewer({ images, alt }: Props) {
+export function ImageViewer({ images, alt, labels = ['Start', 'Finish'] }: Props) {
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(true)
   const [fullscreen, setFullscreen] = useState(false)
@@ -46,7 +45,7 @@ export function ImageViewer({ images, alt }: Props) {
       <img
         key={src}
         src={src}
-        alt={`${alt} – ${LABELS[i] ?? `frame ${i + 1}`} position`}
+        alt={`${alt} – ${labels[i] ?? `frame ${i + 1}`} position`}
         draggable={false}
         className={`${cls} transition-opacity duration-300 ${i === index ? 'opacity-100' : 'opacity-0'}`}
       />
@@ -61,14 +60,14 @@ export function ImageViewer({ images, alt }: Props) {
         {frames('absolute inset-0 h-full w-full object-cover')}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
         <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur">
-          {LABELS[index] ?? index + 1}
+          {labels[index] ?? index + 1}
         </span>
         <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5" onClick={(e) => e.stopPropagation()}>
           {images.map((_, i) => (
             <button
               key={i}
               type="button"
-              aria-label={`Show ${LABELS[i] ?? i + 1} position`}
+              aria-label={`Show ${labels[i] ?? i + 1} position`}
               onClick={() => {
                 setPlaying(false)
                 setIndex(i)
@@ -121,7 +120,7 @@ export function ImageViewer({ images, alt }: Props) {
             {frames('absolute inset-0 h-full w-full object-contain')}
           </div>
           <p className="p-4 text-center text-sm text-zinc-400">
-            {LABELS[index]} position · swipe to switch
+            {labels[index]} position · swipe to switch
           </p>
         </div>
       )}

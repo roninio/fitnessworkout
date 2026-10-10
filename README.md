@@ -20,12 +20,15 @@ A mobile-first workout app (installable PWA) for a 4-day split. It shows today's
 | --- | --- | --- |
 | 1 (Mon) | Chest, Back & Arms | Chest Press, Incline Press, Lat Pulldown, Seated Row, Bicep Curls, Tricep Pushdowns |
 | 2 (Tue) | Quads, Hamstrings & Calves | Barbell Squats, RDLs, Goblet Squat, Leg Extensions, Dumbbell Calf Raise, Hamstring Curls |
-| 3 (Wed) | Rest | |
+| 3 (Wed) | Surf Pop-Up | World's Greatest Stretch, Plyo Push-Up, Pop-Up Drill, Ball Knee Tuck, Knee Raise, Face Pull, Burpee to Pop-Up |
 | 4 (Thu) | Shoulders, Chest & Back | Shoulder Press, Lateral Raises, Chest Flies, Lat Pulldown, Rear Delt Flies, Overhead Tricep Extensions |
 | 5 (Fri) | Glutes, Hamstrings & Quads | Leg Extensions, Goblet Squat, Hamstring Curls, Walking Lunges, Dumbbell Calf Raise, RDLs |
-| 6–7 | Rest | |
+| 6 (Sat) | Surf Pop-Up | same as Day 3 |
+| 7 (Sun) | Rest | |
 
 Leg Press and Calf Press were swapped for free-weight versions (Goblet Squat and Dumbbell Calf Raise). The machine versions are still in the exercise catalog, so you can switch back in `plan.ts`.
+
+The **Surf Pop-Up** days are a light bodyweight session (about 25 min) for a faster, more stable surf pop-up: explosive push, knees-to-chest compression, mobility and landing in stance. Bodyweight sets are logged as `BW` (enter kg only if you add weight), and their progress is tracked in reps. The Pop-Up Drill and Burpee to Pop-Up illustrations are custom SVGs in `public/exercises/`.
 
 Edit the plan in [src/data/plan.ts](src/data/plan.ts) and the names, machines and set/rep targets in [src/data/exercises.ts](src/data/exercises.ts).
 

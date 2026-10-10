@@ -6,8 +6,20 @@ export interface DayPlan {
   day: DayNumber
   title: string
   rest: boolean
+  /** Lighter skill/conditioning day, shown with a wave icon. */
+  surf?: boolean
   exercises: ExerciseId[]
 }
+
+const SURF_POPUP: ExerciseId[] = [
+  'worlds-greatest-stretch',
+  'plyo-push-up',
+  'popup-drill',
+  'ball-knee-tuck',
+  'knee-raise',
+  'face-pull',
+  'burpee-popup',
+]
 
 export const PLAN: DayPlan[] = [
   {
@@ -22,7 +34,7 @@ export const PLAN: DayPlan[] = [
     rest: false,
     exercises: ['barbell-squats', 'rdl', 'goblet-squat', 'leg-extensions', 'dumbbell-calf-raise', 'hamstring-curls'],
   },
-  { day: 3, title: 'Rest Day', rest: true, exercises: [] },
+  { day: 3, title: 'Surf Pop-Up', rest: false, surf: true, exercises: SURF_POPUP },
   {
     day: 4,
     title: 'Shoulders, Chest & Back',
@@ -42,7 +54,7 @@ export const PLAN: DayPlan[] = [
     rest: false,
     exercises: ['leg-extensions', 'goblet-squat', 'hamstring-curls', 'walking-lunges', 'dumbbell-calf-raise', 'rdl'],
   },
-  { day: 6, title: 'Rest Day', rest: true, exercises: [] },
+  { day: 6, title: 'Surf Pop-Up', rest: false, surf: true, exercises: SURF_POPUP },
   { day: 7, title: 'Rest Day', rest: true, exercises: [] },
 ]
 

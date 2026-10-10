@@ -31,6 +31,11 @@ const MAPPING = {
   'walking-lunges': 'Bodyweight_Walking_Lunge',
   'goblet-squat': 'Goblet_Squat',
   'dumbbell-calf-raise': 'Standing_Dumbbell_Calf_Raise',
+  'worlds-greatest-stretch': 'Worlds_Greatest_Stretch',
+  'plyo-push-up': 'Plyo_Push-up',
+  'ball-knee-tuck': 'Exercise_Ball_Pull-In',
+  'knee-raise': 'Knee_Hip_Raise_On_Parallel_Bars',
+  'face-pull': 'Face_Pull',
 }
 
 const res = await fetch(`${RAW}/dist/exercises.json`)

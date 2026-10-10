@@ -208,11 +208,14 @@ export function progression(d: AppData, exId: ExerciseId): { date: string; kg: n
 
 export const formatKg = (kg: number) => String(Math.round(kg * 100) / 100)
 
+/** "40 kg", or "BW" for bodyweight-only sets. */
+export const formatLoad = (kg: number) => (kg === 0 ? 'BW' : `${formatKg(kg)} kg`)
+
 export const formatSets = (sets: SetLog[]) => {
   if (!sets.length) return ''
   const sameKg = sets.every((s) => s.kg === sets[0].kg)
-  if (sameKg) return `${formatKg(sets[0].kg)} kg × ${sets.map((s) => s.reps).join(', ')}`
-  return sets.map((s) => `${formatKg(s.kg)}×${s.reps}`).join(' · ')
+  if (sameKg) return `${formatLoad(sets[0].kg)} × ${sets.map((s) => s.reps).join(', ')}`
+  return sets.map((s) => `${s.kg === 0 ? 'BW' : formatKg(s.kg)}×${s.reps}`).join(' · ')
 }
 
 export const allExerciseIds = Object.keys(EXERCISES) as ExerciseId[]

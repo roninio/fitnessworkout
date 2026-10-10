@@ -178,7 +178,7 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
           <h1 className="text-2xl font-extrabold leading-tight tracking-tight text-white">{ex.name}</h1>
         </div>
 
-        <ImageViewer key={`img-${ex.id}`} images={ex.images} alt={ex.name} />
+        <ImageViewer key={`img-${ex.id}`} images={ex.images} labels={ex.frameLabels} alt={ex.name} />
 
         <div className="flex flex-wrap gap-2 text-sm">
           <span className="flex items-center gap-1.5 rounded-full bg-zinc-900 px-3 py-1.5 text-zinc-200">
@@ -194,7 +194,7 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
             <div className="text-xs font-medium uppercase tracking-wide text-zinc-500">
               Last time{last ? ` · ${relativeDay(last.session.date)}` : ''}
             </div>
-            <div className="mt-0.5 font-semibold text-white">{last ? formatSets(last.sets) : 'First time, find a comfortable weight'}</div>
+            <div className="mt-0.5 font-semibold text-white">{last ? formatSets(last.sets) : 'First time: log what you do today'}</div>
           </div>
           {prevBest > 0 && (
             <div
