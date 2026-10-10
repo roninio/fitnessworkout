@@ -27,8 +27,13 @@ export function ImageViewer({ images, alt }: Props) {
   }
 
   const swipe = {
-    onTouchStart: (e: TouchEvent) => (touchX.current = e.touches[0].clientX),
+    onTouchStart: (e: TouchEvent) => {
+      e.stopPropagation()
+      touchX.current = e.touches[0].clientX
+    },
+    onTouchMove: (e: TouchEvent) => e.stopPropagation(),
     onTouchEnd: (e: TouchEvent) => {
+      e.stopPropagation()
       if (touchX.current === null) return
       const dx = e.changedTouches[0].clientX - touchX.current
       touchX.current = null
@@ -49,13 +54,16 @@ export function ImageViewer({ images, alt }: Props) {
 
   return (
     <>
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl bg-zinc-900" {...swipe}>
+      <div
+        className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl bg-zinc-900"
+        onClick={() => images.length > 1 && go(1)}
+      >
         {frames('absolute inset-0 h-full w-full object-cover')}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
         <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur">
           {LABELS[index] ?? index + 1}
         </span>
-        <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+        <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5" onClick={(e) => e.stopPropagation()}>
           {images.map((_, i) => (
             <button
               key={i}
@@ -69,7 +77,7 @@ export function ImageViewer({ images, alt }: Props) {
             />
           ))}
         </div>
-        <div className="absolute bottom-2 right-2 flex gap-1.5">
+        <div className="absolute bottom-2 right-2 flex gap-1.5" onClick={(e) => e.stopPropagation()}>
           {images.length > 1 && (
             <button
               type="button"
@@ -97,6 +105,7 @@ export function ImageViewer({ images, alt }: Props) {
           aria-label={`${alt} images`}
           className="fixed inset-0 z-50 flex flex-col bg-black pt-safe pb-safe"
           onClick={() => setFullscreen(false)}
+          {...swipe}
         >
           <div className="flex justify-end p-3">
             <button
@@ -108,7 +117,7 @@ export function ImageViewer({ images, alt }: Props) {
               <X className="h-6 w-6" />
             </button>
           </div>
-          <div className="relative flex-1" {...swipe} onClick={(e) => e.stopPropagation()}>
+          <div className="relative flex-1" onClick={(e) => e.stopPropagation()}>
             {frames('absolute inset-0 h-full w-full object-contain')}
           </div>
           <p className="p-4 text-center text-sm text-zinc-400">

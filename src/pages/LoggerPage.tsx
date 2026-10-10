@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from 'react'
 import { ChevronDown, ChevronLeft, ChevronRight, Dumbbell, Note, Plus, Trash, Trophy } from '../components/Icons'
 import { ImageViewer } from '../components/ImageViewer'
 import { SetRow } from '../components/SetRow'
@@ -37,9 +37,72 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
   const isLast = index === plan.exercises.length - 1
   const allDone = done >= total && total > 0
 
+  const mainRef = useRef<HTMLElement>(null)
+  const touch = useRef<{ x: number; y: number; axis: 'x' | 'y' | null; dx: number } | null>(null)
+  const enterDir = useRef(0)
+
+  const goTo = (i: number) => {
+    if (i < 0 || i >= plan.exercises.length || i === index) return false
+    enterDir.current = i > index ? 1 : -1
+    onIndexChange(i)
+    return true
+  }
+
   useEffect(() => {
     window.scrollTo({ top: 0 })
+    const dir = enterDir.current
+    enterDir.current = 0
+    if (dir && mainRef.current?.animate) {
+      mainRef.current.animate(
+        [
+          { transform: `translateX(${dir * 48}px)`, opacity: 0 },
+          { transform: 'translateX(0)', opacity: 1 },
+        ],
+        { duration: 220, easing: 'ease-out' },
+      )
+    }
   }, [index])
+
+  // Horizontal swipe on the page moves to the next / previous exercise; content follows the finger.
+  const dragOffset = (dx: number) => ((dx > 0 && index === 0) || (dx < 0 && isLast) ? dx / 4 : dx)
+
+  const onTouchStart = (e: TouchEvent) => {
+    const target = e.target as HTMLElement
+    touch.current = target.closest('input, textarea')
+      ? null
+      : { x: e.touches[0].clientX, y: e.touches[0].clientY, axis: null, dx: 0 }
+  }
+
+  const onTouchMove = (e: TouchEvent) => {
+    const t = touch.current
+    const el = mainRef.current
+    if (!t || !el) return
+    const dx = e.touches[0].clientX - t.x
+    const dy = e.touches[0].clientY - t.y
+    if (!t.axis) {
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return
+      t.axis = Math.abs(dx) > Math.abs(dy) * 1.2 ? 'x' : 'y'
+    }
+    if (t.axis !== 'x') return
+    t.dx = dx
+    el.style.transform = `translateX(${dragOffset(dx)}px)`
+    el.style.opacity = String(1 - Math.min(Math.abs(dx) / 800, 0.35))
+  }
+
+  const onTouchEnd = () => {
+    const t = touch.current
+    const el = mainRef.current
+    touch.current = null
+    if (!t || !el || t.axis !== 'x') return
+    const from = dragOffset(t.dx)
+    el.style.transform = ''
+    el.style.opacity = ''
+    if (Math.abs(t.dx) > 70 && goTo(index + (t.dx < 0 ? 1 : -1))) return
+    el.animate?.([{ transform: `translateX(${from}px)` }, { transform: 'translateX(0)' }], {
+      duration: 180,
+      easing: 'ease-out',
+    })
+  }
 
   const save = (next: SetLog[]) => setExerciseSets(date, day, ex.id, next)
 
@@ -90,7 +153,7 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
                 key={id}
                 type="button"
                 aria-label={`Go to ${EXERCISES[id].name}`}
-                onClick={() => onIndexChange(i)}
+                onClick={() => goTo(i)}
                 className={`h-2 rounded-full transition-all ${i === index ? 'w-5 bg-accent' : 'w-2 bg-zinc-700'}`}
               />
             ))}
@@ -99,10 +162,18 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
         </div>
       </header>
 
-      <main className="flex-1 space-y-5 px-4 pb-6 pt-1">
+      <main
+        ref={mainRef}
+        className="flex-1 touch-pan-y space-y-5 px-4 pb-6 pt-1"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchEnd}
+      >
         <div>
           <p className="text-sm font-medium text-zinc-500">
             Exercise {index + 1} of {plan.exercises.length}
+            <span className="text-zinc-600"> · swipe ← → to switch</span>
           </p>
           <h1 className="text-2xl font-extrabold leading-tight tracking-tight text-white">{ex.name}</h1>
         </div>
@@ -210,7 +281,7 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
             <button
               type="button"
               disabled={index === 0}
-              onClick={() => onIndexChange(index - 1)}
+              onClick={() => goTo(index - 1)}
               aria-label="Previous exercise"
               className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-zinc-900 text-zinc-200 active:scale-95 disabled:opacity-30"
             >
@@ -218,7 +289,7 @@ export function LoggerPage({ data, date, day, index, onIndexChange, onClose, onS
             </button>
             <button
               type="button"
-              onClick={() => (isLast ? onClose() : onIndexChange(index + 1))}
+              onClick={() => (isLast ? onClose() : goTo(index + 1))}
               className={`flex h-14 min-w-0 flex-1 items-center justify-center gap-1 rounded-2xl px-3 text-lg font-bold transition active:scale-[0.98] ${
                 allDone ? 'bg-accent text-zinc-950' : 'bg-zinc-800 text-white'
               }`}
