@@ -1,0 +1,57 @@
+import type { ExerciseId } from './exercises'
+
+export type DayNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7
+
+export interface DayPlan {
+  day: DayNumber
+  title: string
+  rest: boolean
+  exercises: ExerciseId[]
+}
+
+export const PLAN: DayPlan[] = [
+  {
+    day: 1,
+    title: 'Chest, Back & Arms',
+    rest: false,
+    exercises: ['chest-press', 'incline-press', 'lat-pulldown', 'seated-row', 'bicep-curls', 'tricep-pushdowns'],
+  },
+  {
+    day: 2,
+    title: 'Quads, Hamstrings & Calves',
+    rest: false,
+    exercises: ['barbell-squats', 'rdl', 'leg-press', 'leg-extensions', 'calf-press', 'hamstring-curls'],
+  },
+  { day: 3, title: 'Rest Day', rest: true, exercises: [] },
+  {
+    day: 4,
+    title: 'Shoulders, Chest & Back',
+    rest: false,
+    exercises: [
+      'shoulder-press',
+      'lateral-raises',
+      'chest-flies',
+      'lat-pulldown',
+      'rear-delt-flies',
+      'overhead-tricep-extensions',
+    ],
+  },
+  {
+    day: 5,
+    title: 'Glutes, Hamstrings & Quads',
+    rest: false,
+    exercises: ['leg-extensions', 'leg-press', 'hamstring-curls', 'walking-lunges', 'calf-press', 'rdl'],
+  },
+  { day: 6, title: 'Rest Day', rest: true, exercises: [] },
+  { day: 7, title: 'Rest Day', rest: true, exercises: [] },
+]
+
+export const getDayPlan = (day: DayNumber): DayPlan => PLAN[day - 1]
+
+export const nextWorkoutDay = (day: DayNumber): DayPlan => {
+  for (let i = 1; i <= 7; i++) {
+    const p = PLAN[(day - 1 + i) % 7]
+    if (!p.rest) return p
+  }
+  return PLAN[0]
+}
